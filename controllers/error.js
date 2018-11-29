@@ -16,9 +16,9 @@ module.exports = {
      * @param {Response} res 
      * @param {NextFunction} next 
      */
-    '500'(req, res, next) {
+    '500'(err, req, res, next) {
         console.log(err.stack);
-        if(app.get('env') !== 'development') {
+        if(process.env.NODE_ENV !== 'development') {
             return res.json( new ApiResponse({ status: '500', errors: ['Internal error, please try again'] }) )
         }
         return res.status(500).json(new ApiResponse({ status: '500', errors: [err.message] }) )
